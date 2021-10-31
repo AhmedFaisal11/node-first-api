@@ -21,7 +21,7 @@ app.get('/getUsers' , function(req ,res){
 });
 
 //endpoint to get users by id
-app.get('/:id' , function(req , res){
+app.get('/getuser/:id' , function(req , res){
     fs.readFile(__dirname + "/" + "user.json" , 'utf-8' , function(err ,data){
         if(err){
             res.statusCode(404).send("User Not Found");
@@ -33,6 +33,21 @@ app.get('/:id' , function(req , res){
     })
 });
 
+
+//delete an existing user
+app.delete('/deleteuser/:id' , function(res , req){
+    fs.readFile(__dirname + "/" + "user.json" , 'utf-8' , function(err , data){
+        if(err){
+            res.statusCode(404).send("sorry Not found");
+        }
+        
+        data = JSON.parse(data);
+        // var user = users["user" + req.params.id];
+
+        delete data["user" + 3];
+        res.end("User Deleted Successfully");
+    });
+});
 
 // Create a Server to listen at port 8080
 var server = app.listen(port , function(){
